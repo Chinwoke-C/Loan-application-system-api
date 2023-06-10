@@ -1,4 +1,4 @@
-package com.loan.application.system.userManagement.data.dto.Register;
+package com.loan.application.system.userManagement.data.dto.Response;
 
 import lombok.*;
 

@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-
+@Entity
 public class LoanOfficer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
