@@ -7,6 +7,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
+
+//    @Bean
+//    public WebClient.Builder getWebClientBuilder() {
+//        return WebClient.builder();
+//    }
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper mapper = new ModelMapper();
