@@ -8,7 +8,5 @@ import com.loan.application.system.userManagement.data.dto.Request.RegisterReque
 public interface CustomerService {
 RegisterResponse register(RegisterRequest registerDto);
 
-LoginResponse login(LoginRequest loginDto);
-
 
 }

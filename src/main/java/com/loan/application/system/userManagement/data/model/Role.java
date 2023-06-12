@@ -1,5 +1,6 @@
 package com.loan.application.system.userManagement.data.model;
 
-public enum Roles {
-USER, ADMINISTRATOR
+public enum Role {
+CUSTOMER, ADMINISTRATOR
 }
+

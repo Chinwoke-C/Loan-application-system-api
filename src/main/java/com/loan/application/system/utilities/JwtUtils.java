@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.loan.application.system.utilities.Constants.ISSUER;
@@ -72,4 +73,8 @@ public class JwtUtils {
                 .compact();
     }
 
+    public String generateRefreshToken(String email) {
+
+        return generateToken(new HashMap<>(), email, refreshExpiration);
+    }
 }
