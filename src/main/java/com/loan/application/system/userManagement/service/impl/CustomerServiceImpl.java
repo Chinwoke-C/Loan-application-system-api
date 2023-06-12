@@ -11,6 +11,7 @@ import com.loan.application.system.userManagement.data.repository.CustomerReposi
 import com.loan.application.system.userManagement.data.repository.UserRepository;
 import com.loan.application.system.userManagement.service.CustomerService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -20,12 +21,13 @@ import java.util.Set;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public RegisterResponse register(RegisterRequest registerDto) {
         User customerDetails = User.builder()
                 .fullName(registerDto.getFullName())
                 .email(registerDto.getEmail())
-                .password(registerDto.getPassword())
+                .password(passwordEncoder.encode(registerDto.getPassword()))
                 .roles(Set.of(Roles.USER))
                 .isEnabled(true)
                 .build();

@@ -6,4 +6,5 @@ public class Constants {
     public static final String INVALID_EMAIL = "invalid email";
     public static final String PASSWORD_REQUIRED = "password required";
     public static final String BEARER = "Bearer";
+    public static final String ISSUER= "LoanApp";
 }

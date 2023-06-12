@@ -36,14 +36,17 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
          @NonNull HttpServletRequest request,
            @NonNull HttpServletResponse response,
            @NonNull FilterChain filterChain) throws ServletException, IOException {
+//        if(request.getServletPath().equals("api/v1/register")){
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
        final String header = request.getHeader(AUTHORIZATION);
-       if (!StringUtils.hasText(header) ||
-               !StringUtils.startsWithIgnoreCase(header, BEARER)){
-           filterChain.doFilter(request, response);
-           return;
-       }
-       if (StringUtils.hasText(header) &&
-            StringUtils.startsWithIgnoreCase(header, BEARER)){
+//       if (!StringUtils.hasText(header) ||
+//               !StringUtils.startsWithIgnoreCase(header, BEARER)){
+//           filterChain.doFilter(request, response);
+//           return;
+//       }
+       if (StringUtils.hasText(header) && StringUtils.startsWithIgnoreCase(header, BEARER)){
            final String token = header.substring(BEARER.length());
            if(jwtUtils.validateToken(token)){
                final String username = jwtUtils.extractUsername(token);

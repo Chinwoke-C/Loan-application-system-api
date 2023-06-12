@@ -2,16 +2,21 @@ package com.loan.application.system.userManagement.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class AppConfig {
+    @Value("${Jwt_Secret_Key}")
+    private String jwtSecretKey;
 
-//    @Bean
-//    public WebClient.Builder getWebClientBuilder() {
-//        return WebClient.builder();
-//    }
+    @Bean
+    public WebClient.Builder getWebClientBuilder() {
+        return WebClient.builder();
+    }
+
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper mapper = new ModelMapper();

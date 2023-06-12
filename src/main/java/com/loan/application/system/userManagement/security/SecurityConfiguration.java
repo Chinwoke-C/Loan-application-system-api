@@ -47,7 +47,8 @@ public class SecurityConfiguration {
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(config -> config.accessDeniedHandler(accessDeniedHandler))
-                .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class) .authorizeHttpRequests(authorize -> authorize
+                .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(WHITE_LIST)
                         .permitAll()
                         .requestMatchers(SWAGGER)
