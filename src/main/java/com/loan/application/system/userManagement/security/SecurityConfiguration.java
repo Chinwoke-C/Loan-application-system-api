@@ -37,7 +37,7 @@ public class SecurityConfiguration {
     private final String[] WHITE_LIST = {
             "api/v1/register"
     };
-    private final String[] SWAGGER = {"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs**"};
+    private final String[] SWAGGER = {"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
