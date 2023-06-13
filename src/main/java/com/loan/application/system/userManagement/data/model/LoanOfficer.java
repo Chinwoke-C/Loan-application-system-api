@@ -17,5 +17,6 @@ public class LoanOfficer {
     private Long id;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User userDetails;
+    @Column(unique = true)
     private String employeeId;
 }

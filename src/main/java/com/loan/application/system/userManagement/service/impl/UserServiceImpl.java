@@ -3,7 +3,10 @@ package com.loan.application.system.userManagement.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loan.application.system.userManagement.data.dto.Request.LoginRequest;
 import com.loan.application.system.userManagement.data.dto.Response.LoginResponse;
+import com.loan.application.system.userManagement.data.model.LoanOfficer;
+import com.loan.application.system.userManagement.data.model.Role;
 import com.loan.application.system.userManagement.data.model.User;
+import com.loan.application.system.userManagement.data.repository.LoanOfficerRepository;
 import com.loan.application.system.userManagement.data.repository.UserRepository;
 import com.loan.application.system.userManagement.security.AuthenticatedUser;
 import com.loan.application.system.userManagement.service.UserService;
@@ -22,6 +25,7 @@ import com.loan.application.system.exceptions.userManagement.UserNotFoundExcepti
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,23 +38,35 @@ public class UserServiceImpl implements UserService {
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
+    private final LoanOfficerRepository loanOfficerRepository;
     @Override
-    public LoginResponse login(LoginRequest requestDto) {
+    public LoginResponse login(LoginRequest requestDto, Role role) {
         try{
-            Authentication authentication = authenticationManager.authenticate(
+            Authentication authentication = null;
+            if(role == Role.CUSTOMER) {
+                authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(requestDto.getEmail(),
                             requestDto.getPassword())
             );
-            Map<String, Object> claims = authentication.getAuthorities().stream()
-                    .collect(
-                            Collectors.toMap(
-                                    authority -> "claim",
-                                    Function.identity()
-                            )
-                    );
-            AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
-            String email = user.getUser().getEmail();
-            return generateTokens(claims, email);
+                Optional<LoanOfficer> loanOfficer = loanOfficerRepository.findByEmployeeId(requestDto.getEmployeeId());
+                if(loanOfficer.isEmpty()){
+                   throw new UserNotFoundException("Invalid employee ID");
+                }
+            }
+            if(authentication != null) {
+                Map<String, Object> claims = authentication.getAuthorities().stream()
+                        .collect(
+                                Collectors.toMap(
+                                        authority -> "claim",
+                                        Function.identity()
+                                )
+                        );
+                AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
+                String email = user.getUser().getEmail();
+                return generateTokens(claims, email);
+            }else{
+                throw new UserNotFoundException("Authentication Failed");
+            }
 
         } catch (Exception e) {
             throw new RuntimeException(e);

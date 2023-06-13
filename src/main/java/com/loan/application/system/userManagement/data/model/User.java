@@ -34,7 +34,7 @@ public class User {
 
     private LocalDateTime lastLogin = LocalDateTime.now();
 
-    @JsonIgnore
+    @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
     private final LocalDateTime dateJoined = LocalDateTime.now();
