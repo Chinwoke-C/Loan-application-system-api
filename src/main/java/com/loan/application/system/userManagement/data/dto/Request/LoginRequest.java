@@ -17,8 +17,6 @@ public class LoginRequest {
     @NotBlank(message = EMAIL_REQUIRED)
     @Email(message = INVALID_EMAIL)
     private String email;
-    private String employeeId;
-
     @NotBlank(message = PASSWORD_REQUIRED)
     private String password;
 }

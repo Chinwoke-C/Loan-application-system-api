@@ -40,33 +40,22 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
     private final LoanOfficerRepository loanOfficerRepository;
     @Override
-    public LoginResponse login(LoginRequest requestDto, Role role) {
+    public LoginResponse login(LoginRequest requestDto) {
         try{
-            Authentication authentication = null;
-            if(role == Role.CUSTOMER) {
-                authentication = authenticationManager.authenticate(
+            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(requestDto.getEmail(),
                             requestDto.getPassword())
             );
-                Optional<LoanOfficer> loanOfficer = loanOfficerRepository.findByEmployeeId(requestDto.getEmployeeId());
-                if(loanOfficer.isEmpty()){
-                   throw new UserNotFoundException("Invalid employee ID");
-                }
-            }
-            if(authentication != null) {
-                Map<String, Object> claims = authentication.getAuthorities().stream()
-                        .collect(
-                                Collectors.toMap(
-                                        authority -> "claim",
-                                        Function.identity()
-                                )
-                        );
-                AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
-                String email = user.getUser().getEmail();
-                return generateTokens(claims, email);
-            }else{
-                throw new UserNotFoundException("Authentication Failed");
-            }
+            Map<String, Object> claims = authentication.getAuthorities().stream()
+                    .collect(
+                            Collectors.toMap(
+                                    authority -> "claim",
+                                    Function.identity()
+                            )
+                    );
+            AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
+            String email = user.getUser().getEmail();
+            return generateTokens(claims, email);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

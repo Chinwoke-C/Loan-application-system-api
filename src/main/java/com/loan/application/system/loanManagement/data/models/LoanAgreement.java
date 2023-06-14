@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,6 +18,6 @@ public class LoanAgreement {
     @JsonUnwrapped
     private Loan loanDetails;
     private String repaymentTerms;
-    private LocalDate dueDate;
-
+    @OneToOne/*(cascade = )*/
+    private RepaymentSchedule repaymentSchedule;
 }

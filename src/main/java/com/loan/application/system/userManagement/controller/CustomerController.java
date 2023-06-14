@@ -44,8 +44,8 @@ public class CustomerController {
             required = true
             )
             @RequestBody @Valid LoginRequest loginRequest) {
-    LoginResponse response = userService.login(loginRequest, Role.CUSTOMER);
-    return ResponseEntity.ok(response);
+    LoginResponse response = userService.login(loginRequest);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
 }
 
 }
